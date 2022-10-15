@@ -4,7 +4,9 @@ on:
   workflow_dispatch:
   # push: #runs when you push a change to the repo
   # schedule:
-  #       - cron: "0 0 * * *" #runs at 00:00 UTC everyday
+  #      - cron: "0 */6 * * *" 
+# runs on the 0th minute, every 6 hours (0,6,12,18), every day of month, every month, every day of week 
+# because github actions jobs are limited to 6 hours
 
 concurrency: # should prevent two instances of the bot from running at once
   group: ${{ github.workflow }}-${{ github.discord.py-starter }} # can change name to your bot
@@ -23,8 +25,8 @@ jobs:
     - name: Install dependencies
       run: | # install whatever else you need here
         python -m pip install --upgrade pip
-        pip install discord.py
-        pip install discord-py-slash-command
+        pip install discord.py==1.7.3
+        pip install discord-py-slash-command==3.0.3
     - name: execute py script
       env: 
           TOKEN: ${{ secrets.TOKEN }} # sets bot token
